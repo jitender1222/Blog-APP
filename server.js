@@ -4,6 +4,7 @@ const colors = require("colors");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+const path = require("path");
 
 // configure dotenv
 
@@ -33,7 +34,14 @@ app.use(morgan("dev"));
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/blog", blogRoute);
 
-// app.get('/',);
+// static files
+
+app.use(express.static(path.join(__dirname, "./client/build")));
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+// app.use(express.static(path.join(__dirname, './cli' )))
 
 // PORT
 
